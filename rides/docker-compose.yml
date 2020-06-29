@@ -1,0 +1,20 @@
+version: "3.1"
+services:
+ rides:
+  build: ./rides
+  restart: always
+  image: rides:latest
+  links:
+  - db1
+  ports:
+   - "80:80"
+
+ db1:
+  image: mysql:5.7
+  ports:
+  - "32000:3306"
+  environment:
+  - MYSQL_ROOT_PASSWORD=password
+  - MYSQL_DATABASE=rides
+  volumes:
+  - ./db:/docker-entrypoint-initdb.d/:ro

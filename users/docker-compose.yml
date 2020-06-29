@@ -1,0 +1,19 @@
+version: "3.1"
+services:
+ users:
+  build: ./users
+  restart: always
+  image: users:latest
+  links:
+  - db
+  ports:
+  - "80:80"
+ db:
+  image: mysql:5.7
+  ports:
+  - "32000:3306"
+  environment:
+  - MYSQL_ROOT_PASSWORD=password
+  - MYSQL_DATABASE=users
+  volumes:
+  - ./db:/docker-entrypoint-initdb.d/:ro
